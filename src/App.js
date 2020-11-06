@@ -12,12 +12,19 @@ class App extends Component {
       monsters: [],
       searchField: ''
     }
+    // this.handleChange = this.handleChange.bind(this);
+    // old way to bind the context to this
+    // Replaced with arrow functions
   }
 
   componentDidMount() {
     fetch('https://jsonplaceholder.typicode.com/users')
     .then(response => response.json())
     .then(users => this.setState({ monsters: users}));
+  }
+
+  handleChange = e => {
+    this.setState({ searchField: e.target.value })
   }
 
   render() {
@@ -30,9 +37,10 @@ class App extends Component {
       )
     return (
       <div className="App">
+        <h1>Monster Rolodex</h1>
         <SearchBox 
           placeholder='Search monsters'
-          handleChange={e => this.setState({ searchField: e.target.value })}
+          handleChange={this.handleChange}
         />
         <CardList monsters={filteredMonsters} />
       </div>
